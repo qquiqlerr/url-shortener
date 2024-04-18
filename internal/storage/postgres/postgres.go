@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"github.com/jackc/pgx"
+	"github.com/jackc/pgx/v5/pgconn"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"url-shortener/internal/storage"
 )
@@ -42,7 +42,7 @@ func (s *Storage) SaveURL(urlToSave string, alias string) (id int64, err error) 
 	}
 	err = stmt.QueryRow(alias, urlToSave).Scan(&id)
 	if err != nil {
-		if pgxErr, ok := err.(pgx.PgError); ok && pgxErr.SQLState() == "23505" {
+		if pgErr, ok := err.(*pgconn.PgError); ok && pgErr.Code == "23505" {
 			return 0, storage.ErrUrlExists
 		}
 		return 0, fmt.Errorf("execution is failed: %s - %s", op, err)

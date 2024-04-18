@@ -1,5 +1,5 @@
 env: "local" #local, dev, prod
-storage_address: "postgresql://postgres:157315@localhost:5432/urlshortener"
+storage_address: "postgresql://postgres:157315@localhost:5433/urlshortener"
 http_server:
   address: "localhost:8080"
   timeout: 4s
