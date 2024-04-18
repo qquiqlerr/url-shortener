@@ -68,3 +68,19 @@ func (s *Storage) GetURL(alias string) (url string, err error) {
 
 	return url, nil
 }
+
+func (s *Storage) RemoveURL(alias string) error {
+	const op = "storage.postgres.RemoveURL"
+	stmt, err := s.db.Prepare(`DELETE FROM url WHERE alias = $1;`)
+	if err != nil {
+		return fmt.Errorf("prepare url failed: %s - %s", op, err)
+	}
+	res, err := stmt.Exec(alias)
+	if err != nil {
+		return fmt.Errorf("try ro remove failed: %s - %s", op, err)
+	}
+	if val, err := res.RowsAffected(); err != nil || val == 0 {
+		return fmt.Errorf("nothing to remove: %s", op)
+	}
+	return nil
+}
