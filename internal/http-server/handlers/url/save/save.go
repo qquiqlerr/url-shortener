@@ -75,7 +75,7 @@ func New(log *slog.Logger, urlSaver URLSaver, addr string) http.HandlerFunc {
 
 		render.JSON(w, r, Response{
 			Response: api.OK(),
-			Alias:    addr + "/" + alias,
+			Alias:    "http://31.129.57.182:8082/" + alias,
 		})
 	}
 
