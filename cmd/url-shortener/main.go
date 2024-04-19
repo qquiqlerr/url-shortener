@@ -40,7 +40,7 @@ func main() {
 		r.Use(middleware.BasicAuth("url-shortener", map[string]string{
 			cfg.HTTPServer.User: cfg.HTTPServer.Password,
 		}))
-		r.Post("/", save.New(log, db, cfg.Address))
+		r.Post("/", save.New(log, db))
 		r.Delete("/{alias}", delete2.New(log, db))
 	})
 

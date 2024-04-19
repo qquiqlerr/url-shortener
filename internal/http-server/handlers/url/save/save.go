@@ -30,7 +30,7 @@ type URLSaver interface {
 	SaveURL(urlToSave string, alias string) (id int64, err error)
 }
 
-func New(log *slog.Logger, urlSaver URLSaver, addr string) http.HandlerFunc {
+func New(log *slog.Logger, urlSaver URLSaver) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		op := "internal.http-server.handlers.url.save.New"
 
